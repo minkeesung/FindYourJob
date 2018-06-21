@@ -4,14 +4,16 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import { Provider } from 'react-redux';
 import { Icon } from 'react-native-elements'
 
-import store from './store';
-import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
+import { PersistGate } from 'redux-persist/integration/react'
+// import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from './screens/ReviewScreen';
+
 
 const ReviewStack = createStackNavigator({
   review: ReviewScreen,
@@ -53,10 +55,13 @@ const RootStack =  createBottomTabNavigator({
 })
 
 export default class App extends React.Component {
+  debugger
   render() {
     return (
       <Provider store={store}>
-        <RootStack />
+        <PersistGate loading={null} persistor={persistor}>
+          <RootStack />
+        </PersistGate>
       </Provider>
     )
   }
